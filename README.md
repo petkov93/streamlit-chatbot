@@ -4,7 +4,7 @@
 1. Add you own API key into .env file 
    - It doesn't neet to be  from xAI, you can use other API's, just change the url path and endpoint in const.py
    - If its paid API, you can send in the request only the last prompt(prompt + system message) for less token usage
-   - Otherwise u can send the whole conversation
+   - otherwise u can send the whole conversation
 2. To run the web app on localhost:
 <<<<<<< HEAD
    - In terminal -> ***streamlit run server.py***

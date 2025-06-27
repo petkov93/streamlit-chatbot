@@ -2,17 +2,18 @@ import os
 import time
 import json
 import requests
-from dotenv import load_dotenv
 from requests import Response
 
 from const import BASE_XAI_URL, XAI_ENDPOINT, SYSTEM_MSG, XAI_MODELS_ENDPOINT, EXIT_OPTIONS, USER_INPUT_STR
 
-load_dotenv()
 
-api_key = os.getenv('XAI_API_KEY')
 # xai_url = BASE_XAI_URL + XAI_ENDPOINT
 xai_url = "https://api.x.ai/v1/chat/completions"
 models_url = BASE_XAI_URL + XAI_MODELS_ENDPOINT
+
+
+def validate_xai_key(api_key: str):
+    return api_key.startswith('xai-')
 
 
 def get_models(url: str, key: str) -> None:
@@ -45,7 +46,7 @@ def get_last_question(history: list, sys_msg: list) -> list:
     return [sys_msg, history[-1]]
 
 
-def get_bobs_response(history: list) -> Response:
+def get_bobs_response(history: list, api_key: str) -> Response:
     last_question = get_last_question(history, SYSTEM_MSG)
     headers = {
         "Content-Type": "application/json",

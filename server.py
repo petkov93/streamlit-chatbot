@@ -1,23 +1,32 @@
 import streamlit as st
 
-from ai_agent import add_question_to_history, add_answer_to_history, get_bobs_response
+from ai_agent import add_question_to_history, add_answer_to_history, get_bobs_response, validate_xai_key
 from const import USER_INPUT_STR, SYSTEM_MSG
 
 
 def set_session_state():
     if 'conversation' not in st.session_state:
         st.session_state.conversation = [SYSTEM_MSG]
+    if 'XAI_API_KEY' not in st.session_state:
+        st.session_state['XAI_API_KEY'] = ''
 
 
 def place_sidebar():
-    with st.sidebar:
-        with st.form('api_form', border=True, clear_on_submit=True, enter_to_submit=True):
-            api_key = st.text_input('Enter Your API key here', type='password')
-            submitted = st.form_submit_button('Submit')
-            if submitted:
-                st.write('API key submitted successfully!')
-                st.write(f'{api_key=}')
-
+    if not st.session_state['XAI_API_KEY']:
+        st.error('xAI API key not provided, enter it in the sidebar to continue!')
+        with st.sidebar:
+            with st.form('api_form', border=False, clear_on_submit=True, enter_to_submit=True):
+                api_key = st.text_input('Enter Your API key here', type='password')
+                submitted = st.form_submit_button('Submit')
+                if submitted:
+                    if validate_xai_key(api_key):
+                        st.session_state['XAI_API_KEY'] = api_key
+                        st.write(st.session_state['XAI_API_KEY'])
+                        st.success('xAI API key set successfully!')
+                        st.rerun(scope="app")
+    else:
+        with st.sidebar:
+            st.success('xAI API key set successfully!')
 
 def place_header():
     with st.container(border=True):
@@ -39,14 +48,23 @@ def place_chat_window():
             with st.chat_message(name=role):
                 st.markdown(msg)
 
+
+def get_input():
+    if validate_xai_key(st.session_state['XAI_API_KEY']):
+        prompt = st.chat_input(USER_INPUT_STR, disabled=False)
+    else:
+        prompt = st.chat_input('Enter xAI API key in the sidebar to continue!', disabled=True)
+    return prompt
+
+
 def run_web_app():
     set_session_state()
     place_header()
     place_sidebar()
-    prompt = st.chat_input(USER_INPUT_STR)
-    if prompt:
-        add_question_to_history(st.session_state.conversation, prompt)
-        answer = get_bobs_response(st.session_state.conversation)
+    question = get_input()
+    if question:
+        add_question_to_history(st.session_state.conversation, question)
+        answer = get_bobs_response(st.session_state.conversation, st.session_state['XAI_API_KEY'])
         add_answer_to_history(st.session_state.conversation, answer)
         place_chat_window()
 
