@@ -14,8 +14,6 @@ api_key = os.getenv('XAI_API_KEY')
 xai_url = "https://api.x.ai/v1/chat/completions"
 models_url = BASE_XAI_URL + XAI_MODELS_ENDPOINT
 
-conversation = [SYSTEM_MSG]
-
 
 def get_models(url: str, key: str) -> None:
     """ Function to print all available models from xAI. """

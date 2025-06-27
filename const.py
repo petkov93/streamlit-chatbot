@@ -22,5 +22,5 @@ SYSTEM_MSG_FUNNY = {
         "Silly questions demand silly answers."
     )
     }
-USER_INPUT_STR = 'Ask me anything Boss...:\n'
+USER_INPUT_STR = 'Ask me anything..\n'
 EXIT_OPTIONS = ['end', 'quit', 'exit', '', ' ']
