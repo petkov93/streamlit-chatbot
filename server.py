@@ -4,6 +4,25 @@ from ai_agent import add_question_to_history, add_answer_to_history, get_bobs_re
 from const import USER_INPUT_STR, SYSTEM_MSG
 
 
+def configure_page():
+    st.set_page_config(
+        page_title="Bob~Your personal AI assistant",
+        layout="wide",
+        initial_sidebar_state="collapsed",
+        menu_items={
+            "Get help": "https://github.com/petkov93/streamlit-chatbot",
+            "Report a bug": "https://github.com/petkov93/streamlit-chatbot",
+            "About": """
+                ## Bob the AI assistant
+                ### Powered using Groq, xAI and OpenAI
+    
+                **My GitHub**: https://github.com/petkov93/
+    
+                Simple but powerful chatbot made as a side project 
+                while studying Python Fundamentals in SoftUni.
+            """
+        }
+    )
 def set_session_state():
     if 'conversation' not in st.session_state:
         st.session_state.conversation = [SYSTEM_MSG]
@@ -58,6 +77,7 @@ def get_input():
 
 
 def run_web_app():
+    configure_page()
     set_session_state()
     place_header()
     place_sidebar()

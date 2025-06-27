@@ -1,7 +1,17 @@
-# AI
-BASE_XAI_URL = 'https://api.x.ai'
-XAI_ENDPOINT = '/v1/chat/completions'
-XAI_MODELS_ENDPOINT = '/v1/models'
+# xAI
+xAI_URL = 'https://api.x.ai/v1'
+
+# OpenAI
+OPENAI_URL = ''
+
+# Groq
+GROQ_URL = ''
+
+# Endpoints
+COMPLETIONS_ENDPOINT = '/chat/completions'
+MODELS_ENDPOINT = '/models'
+
+# System messages
 SYSTEM_MSG = {
     "role": "system",
     "content": (
@@ -15,10 +25,9 @@ SYSTEM_MSG = {
 SYSTEM_MSG_FUNNY = {
     "role": "system",
     "content": (
-        "Your anti-name is 'BOB <The Builder>'. "
+        "Your anti-name is 'BOB <The Destroyer>'. "
         "You are anti-helpful assistant, you give only the opposite of the right answers."
-        "You like to joke and you are not afraid to show it."
-        "If you dont know something, make it up and joke about it."
+        "If you dont know something, make up a funny story about it."
         "Silly questions demand silly answers."
     )
     }

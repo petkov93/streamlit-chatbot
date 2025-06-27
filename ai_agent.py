@@ -4,12 +4,12 @@ import json
 import requests
 from requests import Response
 
-from const import BASE_XAI_URL, XAI_ENDPOINT, SYSTEM_MSG, XAI_MODELS_ENDPOINT, EXIT_OPTIONS, USER_INPUT_STR
+from const import xAI_URL, COMPLETIONS_ENDPOINT, SYSTEM_MSG, MODELS_ENDPOINT, EXIT_OPTIONS, USER_INPUT_STR
 
 
 # xai_url = BASE_XAI_URL + XAI_ENDPOINT
 xai_url = "https://api.x.ai/v1/chat/completions"
-models_url = BASE_XAI_URL + XAI_MODELS_ENDPOINT
+models_url = xAI_URL + MODELS_ENDPOINT
 
 
 def validate_xai_key(api_key: str):
@@ -71,7 +71,7 @@ def get_bobs_response(history: list, api_key: str) -> Response:
     # return response
     return message
 
-def stream_response(resp):
+def stream_response(resp: Response):
     for line in resp.iter_lines():
         if line:
             try:
@@ -87,6 +87,7 @@ def stream_response(resp):
                         yield delta['content']
             except Exception as e:
                 yield f'[Error in stream {e}]'
+
 # old version in terminal
 # def main():
 #     while (user_input := input(USER_INPUT_STR)) not in EXIT_OPTIONS:
