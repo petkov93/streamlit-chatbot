@@ -1,5 +1,8 @@
-<<<<<<< HEAD
+
 # Simple but powerfull chat bot with Streamlit and xAI API
+
+## The app is currently deployed on Streamlit Community Cloud, you need to enter your xAI API key in the sidebar in order to use the bot.
+Link to the app: [BOB the assistant](https://bob-the-assistant.streamlit.app/)
 
 1. Add you own API key into the sidebar
    - It doesn't neet to be  from xAI, you can use other API's, just change the url path and endpoint in const.py
