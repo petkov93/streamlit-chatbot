@@ -4,28 +4,44 @@ import json
 import requests
 from requests import Response
 
-from const import xAI_URL, COMPLETIONS_ENDPOINT, SYSTEM_MSG, MODELS_ENDPOINT, EXIT_OPTIONS, USER_INPUT_STR
-
+from const import xAI_URL, COMPLETIONS_ENDPOINT, SYSTEM_MSG, MODELS_ENDPOINT, EXIT_OPTIONS, USER_INPUT_STR, GROQ_URL, \
+    OPENAI_URL
 
 # xai_url = BASE_XAI_URL + XAI_ENDPOINT
 xai_url = "https://api.x.ai/v1/chat/completions"
-models_url = xAI_URL + MODELS_ENDPOINT
+xai_models_url = xAI_URL + MODELS_ENDPOINT
+groq_models_url = GROQ_URL + MODELS_ENDPOINT
 
 
-def validate_xai_key(api_key: str):
-    return api_key.startswith('xai-')
+def check_api_provider():
+    available_urls = [xAI_URL, OPENAI_URL, GROQ_URL]
+    ...
 
 
-def get_models(url: str, key: str) -> None:
-    """ Function to print all available models from xAI. """
+def get_models(url: str, key: str) -> (bool, list):
+    """
+    Tries to get the available models from the given URL using the provided API key.
+
+    If the request returns status code 200, the API key is considered valid,
+    and the list of models is returned. Otherwise, returns False and an empty list.
+
+    :param url: str - The API URL.
+    :param key: str - The API key to check.
+    :return: tuple:
+        - is_valid (bool): Whether the API key is valid.
+        - models (list): List of available models (empty if invalid).
+    """
+    models = []
+    is_valid = False
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {key}"}
-    all_models = requests.get(models_url, headers=headers)
-    data = all_models.json()
-
-    for model in data['data']:
-        print(model['id'])
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        data = response.json()
+        for model in data['data']:
+            models.append(model)
+    return is_valid, models
 
 
 def add_question_to_history(chat_history, question) -> None:
@@ -100,7 +116,6 @@ def stream_response(resp: Response):
 #         else:
 #             print()
 
-# get_models(models_url, api_key)
-
+#
 # if __name__ == '__main__':
-#     main()
+#     get_models(groq_models_url, g)
