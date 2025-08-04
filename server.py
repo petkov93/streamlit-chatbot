@@ -7,8 +7,8 @@ from const import USER_INPUT_STR, SYSTEM_MSG
 def configure_page():
     st.set_page_config(
         page_title="Bob~Your personal AI assistant",
-        layout="wide",
-        initial_sidebar_state="collapsed",
+        layout="centered",
+        initial_sidebar_state="auto",
         menu_items={
             "Get help": "https://github.com/petkov93/streamlit-chatbot",
             "Report a bug": "https://github.com/petkov93/streamlit-chatbot",
