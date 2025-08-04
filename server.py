@@ -51,7 +51,7 @@ def place_header():
     with st.container(border=True):
         st.title('⭐ BOB ⭐')
         st.header(body='the Brutally Obvious Bot.', divider=True)
-        st.subheader("Welcome to Bob's world, how can I [not] be of service?")
+        st.subheader("How Bob can be of service?")
 
 
 
