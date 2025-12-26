@@ -1,13 +1,10 @@
-import os
-import time
 import json
+
 import requests
 from requests import Response
 
-from const import xAI_URL, COMPLETIONS_ENDPOINT, SYSTEM_MSG, MODELS_ENDPOINT, EXIT_OPTIONS, USER_INPUT_STR
+from const import xAI_URL, SYSTEM_MSG, MODELS_ENDPOINT
 
-
-# xai_url = BASE_XAI_URL + XAI_ENDPOINT
 xai_url = "https://api.x.ai/v1/chat/completions"
 models_url = xAI_URL + MODELS_ENDPOINT
 
@@ -70,6 +67,7 @@ def get_bobs_response(history: list, api_key: str) -> Response:
     message = data['choices'][0]['message']['content']
     # return response
     return message
+
 
 def stream_response(resp: Response):
     for line in resp.iter_lines():
