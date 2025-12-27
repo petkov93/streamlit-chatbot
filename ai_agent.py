@@ -43,7 +43,7 @@ def get_last_question(history: list, sys_msg: list) -> list:
     return [sys_msg, history[-1]]
 
 
-def get_bobs_response(history: list, api_key: str) -> Response:
+def get_bobs_response(history: list, api_key: str) -> str:
     last_question = get_last_question(history, SYSTEM_MSG)
     headers = {
         "Content-Type": "application/json",
