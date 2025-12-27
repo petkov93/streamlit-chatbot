@@ -27,7 +27,10 @@ def set_session_state():
     if 'conversation' not in st.session_state:
         st.session_state.conversation = [SYSTEM_MSG]
     if 'XAI_API_KEY' not in st.session_state:
-        st.session_state['XAI_API_KEY'] = ''
+        try:
+            st.session_state['XAI_API_KEY'] = st.secrets['api']['groq_key']
+        except KeyError:
+            st.session_state['XAI_API_KEY'] = ""
 
 
 def place_sidebar():
