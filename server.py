@@ -49,6 +49,8 @@ def place_sidebar():
     else:
         with st.sidebar:
             st.success('xAI API key set successfully!')
+    with st.sidebar:
+        st.radio(label="Pick AI mode:", options=["Python Expert", "Motivational", "Savage (fun)"])
 
 def place_header():
     with st.container(border=True):
