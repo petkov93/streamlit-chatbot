@@ -17,14 +17,20 @@ def validate_xai_key(api_key: str):
         "Authorization": f"Bearer {api_key}"}
 
     try:
+        # calling the models url, to check if the key is valid
         r = requests.get(url=models_url, headers=headers, timeout=5)
 
+        # if ok
         if r.status_code == 200:
             return True
-
-        elif r.status_code in (401, 403, 404):
+        # Bad request:400,
+        # Unauthorised: 401,
+        # Payment Required: 402,
+        # Forbidden: 403,
+        # Not found: 404
+        elif r.status_code in (400, 401, 403, 404):
             return False
-
+        # Too many requests
         elif r.status_code == 429:
             return True
 
