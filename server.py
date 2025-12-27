@@ -75,7 +75,7 @@ def place_chat_window():
 
 def get_input():
     if validate_xai_key(st.session_state['XAI_API_KEY']):
-        prompt = st.chat_input(USER_INPUT_STR, disabled=False)
+        prompt = st.chat_input('Ask me anything..', disabled=False)
     else:
         prompt = st.chat_input('Enter xAI API key in the sidebar to continue!', disabled=True)
     return prompt
