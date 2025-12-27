@@ -48,8 +48,7 @@ def place_sidebar():
                     st.session_state['XAI_API_KEY'] = api_key
                     st.success('xAI API key set successfully!')
                     st.rerun(scope="app")
-    else:
-        with st.sidebar:
+        else:
             st.success('xAI API key set successfully!')
         st.radio(label="Pick AI mode:", options=list(SYS_MESSAGES.keys()), key='ai_mode', on_change=set_ai_mode)
 
