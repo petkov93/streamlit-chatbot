@@ -1,7 +1,7 @@
 import streamlit as st
 
 from ai_agent import add_question_to_history, add_answer_to_history, get_bobs_response, validate_xai_key
-from const import USER_INPUT_STR, SYSTEM_MSG
+from const import SYS_MESSAGES
 
 
 def configure_page():
