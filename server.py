@@ -33,6 +33,10 @@ def set_session_state():
             st.session_state['XAI_API_KEY'] = ""
 
 
+def set_ai_mode():
+    st.session_state['conversation'] = [SYS_MESSAGES[st.session_state['ai_mode']]]
+
+
 def place_sidebar():
     if not st.session_state['XAI_API_KEY']:
         st.error('xAI API key not provided, enter it in the sidebar to continue!')
