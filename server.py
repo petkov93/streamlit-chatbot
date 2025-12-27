@@ -28,7 +28,8 @@ def set_session_state():
         st.session_state['ai_mode'] = list(SYS_MESSAGES.keys())[0]
 
     if 'conversation' not in st.session_state:
-        st.session_state.conversation = [SYSTEM_MSG]
+        st.session_state.conversation = [SYS_MESSAGES[st.session_state['ai_mode']]]
+
     if 'XAI_API_KEY' not in st.session_state:
         try:
             st.session_state['XAI_API_KEY'] = st.secrets['api']['groq_key']
