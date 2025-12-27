@@ -45,7 +45,9 @@ def get_models(url: str, key: str) -> list:
     data = all_models.json()
 
     for model in data['data']:
-        print(model['id'])
+        models.append(model)
+
+    return models
 
 
 def add_question_to_history(chat_history, question) -> None:
