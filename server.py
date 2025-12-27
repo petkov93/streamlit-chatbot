@@ -38,9 +38,9 @@ def set_ai_mode():
 
 
 def place_sidebar():
-    if not st.session_state['XAI_API_KEY']:
-        st.error('xAI API key not provided, enter it in the sidebar to continue!')
-        with st.sidebar:
+    with st.sidebar:
+        if not st.session_state['XAI_API_KEY']:
+            st.error('xAI API key not provided, enter it in the sidebar to continue!')
             with st.form('api_form', border=False, clear_on_submit=True, enter_to_submit=True):
                 api_key = st.text_input('Enter Your API key here', type='password')
                 submitted = st.form_submit_button('Submit')
