@@ -40,12 +40,10 @@ def place_sidebar():
             with st.form('api_form', border=False, clear_on_submit=True, enter_to_submit=True):
                 api_key = st.text_input('Enter Your API key here', type='password')
                 submitted = st.form_submit_button('Submit')
-                if submitted:
-                    if validate_xai_key(api_key):
-                        st.session_state['XAI_API_KEY'] = api_key
-                        st.write(st.session_state['XAI_API_KEY'])
-                        st.success('xAI API key set successfully!')
-                        st.rerun(scope="app")
+                if submitted and validate_xai_key(api_key):
+                    st.session_state['XAI_API_KEY'] = api_key
+                    st.success('xAI API key set successfully!')
+                    st.rerun(scope="app")
     else:
         with st.sidebar:
             st.success('xAI API key set successfully!')
