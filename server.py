@@ -24,6 +24,9 @@ def configure_page():
         }
     )
 def set_session_state():
+    if 'ai_mode' not in st.session_state:
+        st.session_state['ai_mode'] = list(SYS_MESSAGES.keys())[0]
+
     if 'conversation' not in st.session_state:
         st.session_state.conversation = [SYSTEM_MSG]
     if 'XAI_API_KEY' not in st.session_state:
