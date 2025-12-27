@@ -10,7 +10,29 @@ models_url = xAI_URL + MODELS_ENDPOINT
 
 
 def validate_xai_key(api_key: str):
-    return api_key.startswith('xai-')
+    if not api_key:
+        return False
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}"}
+
+    try:
+        r = requests.get(url=models_url, headers=headers, timeout=5)
+
+        if r.status_code == 200:
+            return True
+
+        elif r.status_code in (401, 403, 404):
+            return False
+
+        elif r.status_code == 429:
+            return True
+
+        return False
+
+    except requests.RequestException:
+        # Network / xAI down → don’t hard-fail the UX
+        return False
 
 
 def get_models(url: str, key: str) -> None:
