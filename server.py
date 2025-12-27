@@ -8,7 +8,7 @@ def configure_page():
     st.set_page_config(
         page_title="Bob~Your personal AI assistant",
         layout="centered",
-        initial_sidebar_state="auto",
+        initial_sidebar_state="expanded",
         menu_items={
             "Get help": "https://github.com/petkov93/streamlit-chatbot",
             "Report a bug": "https://github.com/petkov93/streamlit-chatbot",
