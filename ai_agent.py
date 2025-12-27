@@ -37,6 +37,7 @@ def validate_xai_key(api_key: str):
 
 def get_models(url: str, key: str) -> list:
     """ Function to print all available models from xAI. """
+    models = []
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {key}"}
