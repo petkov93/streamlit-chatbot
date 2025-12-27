@@ -3,18 +3,18 @@ import json
 import requests
 from requests import Response
 
-from const import xAI_URL, SYSTEM_MSG, MODELS_ENDPOINT
-
-xai_url = "https://api.x.ai/v1/chat/completions"
-models_url = xAI_URL + MODELS_ENDPOINT
+from const import xAI_URL, COMPLETIONS_ENDPOINT, MODELS_ENDPOINT
 
 
-def validate_xai_key(api_key: str):
+def validate_xai_key(api_key: str) -> bool:
     if not api_key:
         return False
+
+    models_url = xAI_URL + MODELS_ENDPOINT
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {api_key}"}
+        "Authorization": f"Bearer {api_key}"
+    }
 
     try:
         # calling the models url, to check if the key is valid
@@ -30,7 +30,7 @@ def validate_xai_key(api_key: str):
         # Not found: 404
         elif r.status_code in (400, 401, 403, 404):
             return False
-        # Too many requests
+        # Too many requests: 429
         elif r.status_code == 429:
             return True
 
@@ -41,19 +41,17 @@ def validate_xai_key(api_key: str):
         return False
 
 
-def get_models(url: str, key: str) -> list:
-    """ Function to print all available models from xAI. """
-    models = []
+def get_models(key: str) -> list:
+    """ Function that returns all available models from xAI. """
+    models_url = xAI_URL + MODELS_ENDPOINT
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {key}"}
-    all_models = requests.get(models_url, headers=headers)
-    data = all_models.json()
+        "Authorization": f"Bearer {key}"
+    }
 
-    for model in data['data']:
-        models.append(model)
+    resp = requests.get(models_url, headers=headers)
 
-    return models
+    return [model['id'] for model in resp.json()['data']]
 
 
 def add_question_to_history(chat_history, question) -> None:
@@ -70,33 +68,26 @@ def add_answer_to_history(history, _answer) -> None:
          })
 
 
-def get_last_question(history: list, sys_msg: list) -> list:
-    return [sys_msg, history[-1]]
-
-
 def get_bobs_response(history: list, api_key: str) -> str:
-    last_question = get_last_question(history, SYSTEM_MSG)
+    xai_url = xAI_URL + COMPLETIONS_ENDPOINT
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {api_key}"}
     payload = {
         "model": "grok-3-mini",
-        # sends the whole history OR the last_question + system prompt. (for smaller token usage)
         "messages": history,
-        #  same here, limit the response to 500 tokens.
-        # "max_completion_tokens": 850,
-        #  smaller temp [0.0] -> more deterministic,
+        #  smaller temp [0.0-0.1] -> more deterministic,
         #  bigger temp [0.7-1.0+] -> more creativity, also can make more errors
         "temperature": 0.7,
-        # stream=True causes too much trouble  for now :D
+        # stream: True causes too much trouble  for now :D
         "stream": False
     }
     response = requests.post(url=xai_url, headers=headers, json=payload)
     response.raise_for_status()
-    # response as text
+
     data = response.json()
     message = data['choices'][0]['message']['content']
-    # return response
+
     return message
 
 
@@ -116,3 +107,4 @@ def stream_response(resp: Response):
                         yield delta['content']
             except Exception as e:
                 yield f'[Error in stream {e}]'
+
