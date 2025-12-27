@@ -107,20 +107,3 @@ def stream_response(resp: Response):
                         yield delta['content']
             except Exception as e:
                 yield f'[Error in stream {e}]'
-
-# old version in terminal
-# def main():
-#     while (user_input := input(USER_INPUT_STR)) not in EXIT_OPTIONS:
-#         add_question_to_history(conversation, user_input)
-#         answer = get_bobs_response(conversation)
-#         add_answer_to_history(conversation, answer)
-#         print(f'BOB answered:')
-#         for chunk in stream_response(answer):
-#             print(chunk, end='', flush=True)
-#         else:
-#             print()
-
-# get_models(models_url, api_key)
-
-# if __name__ == '__main__':
-#     main()
