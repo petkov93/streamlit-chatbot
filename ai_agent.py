@@ -35,7 +35,7 @@ def validate_xai_key(api_key: str):
         return False
 
 
-def get_models(url: str, key: str) -> None:
+def get_models(url: str, key: str) -> list:
     """ Function to print all available models from xAI. """
     headers = {
         "Content-Type": "application/json",
