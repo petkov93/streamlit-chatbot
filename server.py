@@ -90,6 +90,7 @@ def run_web_app():
     set_session_state()
     place_header()
     place_sidebar()
+    place_chat_window()
     question = get_input()
     if question:
         add_question_to_history(st.session_state.conversation, question)
