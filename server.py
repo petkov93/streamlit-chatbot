@@ -95,7 +95,7 @@ def run_web_app():
         add_question_to_history(st.session_state.conversation, question)
         answer = get_bobs_response(st.session_state.conversation, st.session_state['XAI_API_KEY'])
         add_answer_to_history(st.session_state.conversation, answer)
-        place_chat_window()
+        st.rerun()
 
 if __name__ == '__main__':
     run_web_app()
